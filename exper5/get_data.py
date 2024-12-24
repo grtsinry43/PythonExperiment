@@ -15,7 +15,8 @@ from bs4 import BeautifulSoup
 def get_data(url):
     ua = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
     headers = {
-        'User-Agent': ua
+        'User-Agent': ua,
+        'Cookie': io.open('cookie.txt', 'r', encoding='utf-8').read()
     }
     response = requests.get(url, headers=headers)
     return response.text
