@@ -44,6 +44,10 @@ def parse_data(html):
         html = get_data(item_link)
         soup = BeautifulSoup(html, 'html.parser')
         intro = soup.select_one('div#link-report-intra').get_text(strip=True)
+        directors = [a.get_text(strip=True) for a in soup.select('div#info span:nth-child(1) span.attrs a')]
+        actors = [a.get_text(strip=True) for a in soup.select('div#info span:nth-child(3) span.attrs a')]
+        types = [a.get_text(strip=True) for a in soup.select('div#info span[property="v:genre"]')]
+        # print(directors, actors, types)
         short_comment_link = soup.select('div.review-item h2 a')[0].attrs.get('href')
         print("影评api " + short_comment_link.replace("/review", "/j/review") + "full")
         short_comment = JSONDecoder().decode(get_data(short_comment_link.replace("/review", "/j/review") + "full"))[
@@ -56,7 +60,10 @@ def parse_data(html):
             'intro': intro,
             'short_comment': short_comment,
             'item_link': item_link,
-            'comment': comment
+            'comment': comment,
+            'directors': directors,
+            'actors': actors,
+            'types': types
         })
         print(name + "已保存")
         print("======")

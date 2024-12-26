@@ -20,6 +20,9 @@ class Movie:
     short_comment: str
     comment: str
     item_link: str
+    directors: list
+    actors: list
+    types: list
 
 def load_data(filename='result.json'):
     with io.open(filename, 'r', encoding='utf-8') as f:
@@ -33,6 +36,8 @@ def save_to_db(data):
 
 def main():
     data = load_data('result.json')
+    # 每次运行前清空数据库
+    collection.delete_many({})
     save_to_db(data)
     print("Data has been saved to the database.")
 
